@@ -17,15 +17,16 @@ const useWebStorage = <TValue>(
   key: string,
   options?: UseWebStorageOptions<TValue>
 ) => {
+  type StateType = TValue | string | null;
   const { defaultValue, storageArea = window.localStorage } = options || {};
-  const [state, setState] = useState<TValue | string | null>(() => {
-    const item = readStorage<TValue>(key, storageArea);
+  const [state, setState] = useState<StateType>(() => {
+    const item = readStorage<StateType>(key, storageArea);
     if (!item) {
       return item;
     }
     if (defaultValue) {
       return typeof defaultValue === "function"
-        ? (defaultValue as () => TValue)()
+        ? (defaultValue as () => StateType)()
         : defaultValue;
     }
     return null;
@@ -35,12 +36,12 @@ const useWebStorage = <TValue>(
     const onStorageEvent = (event: StorageEvent): void => {
       if (event.key === key && event.storageArea === storageArea) {
         setState(
-          event.newValue ? safelyParseJSON<TValue>(event.newValue) : null
+          event.newValue ? safelyParseJSON<StateType>(event.newValue) : null
         );
       }
     };
     const onCustomEvent = (
-      event: CustomEvent<HookEventDetail<TValue>>
+      event: CustomEvent<HookEventDetail<StateType>>
     ): void => {
       if (
         event.detail.key === key &&
@@ -59,11 +60,11 @@ const useWebStorage = <TValue>(
     if (defaultValue) {
       initValue =
         typeof defaultValue === "function"
-          ? (defaultValue as () => TValue)()
+          ? (defaultValue as () => StateType)()
           : defaultValue;
     }
     if (readStorage(key, storageArea) === null && initValue !== null) {
-      writeStorage<TValue>(key, initValue, storageArea);
+      writeStorage<StateType>(key, initValue, storageArea);
     }
     return () => {
       window.removeEventListener("storage", onStorageEvent);
@@ -75,11 +76,11 @@ const useWebStorage = <TValue>(
   }, [key, storageArea, defaultValue]);
 
   const writeState = useCallback(
-    (value: TValue | ((prevState: typeof state) => TValue)) => {
+    (value: StateType | ((prevState: StateType) => StateType)) => {
       writeStorage(
         key,
         typeof value === "function"
-          ? (value as (prevState: typeof state) => TValue)(state)
+          ? (value as (prevState: StateType) => StateType)(state)
           : value,
         storageArea
       );
