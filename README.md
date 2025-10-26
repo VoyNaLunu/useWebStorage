@@ -19,7 +19,7 @@ For the most basic use you only have to provide the `key`. Optional second argum
 
 ```jsx
 const MyComponent = () => {
-const { item, setItem, removeItem } = useStorage("item", {
+const { item, setItem, removeItem } = useWebStorage("item", {
   defaultValue: "something",
   storageArea: window.localStorage,
 });
