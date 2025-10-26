@@ -7,9 +7,9 @@ export default defineConfig({
   plugins: [react(), dts({ tsconfigPath: "./tsconfig.app.json" })],
   build: {
     lib: {
-      entry: "src/useWebStorage.ts",
+      entry: "src/index.ts",
       name: "useWebStorage",
-      fileName: "useWebStorage",
+      fileName: "index",
       formats: ["es", "cjs"],
     },
     rollupOptions: {
