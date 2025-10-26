@@ -75,14 +75,16 @@ const useWebStorage = <TValue>(
   }, [key, storageArea, defaultValue]);
 
   const writeState = useCallback(
-    (value: TValue | (() => TValue)) => {
+    (value: TValue | ((prevState: typeof state) => TValue)) => {
       writeStorage(
         key,
-        typeof value === "function" ? (value as () => TValue)() : value,
+        typeof value === "function"
+          ? (value as (prevState: typeof state) => TValue)(state)
+          : value,
         storageArea
       );
     },
-    [key, storageArea]
+    [state, key, storageArea]
   );
 
   const removeState = useCallback(
