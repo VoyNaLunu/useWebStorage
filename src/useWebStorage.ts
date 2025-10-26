@@ -13,6 +13,36 @@ interface UseWebStorageOptions<TValue> {
   storageArea?: Storage;
 }
 
+/**
+ * A hook to enable updates to state via provided storage area (or localStorage if it wasn't).
+ * This updates when the `writeStorage` function is used, when the returned function
+ * is called, or when the "storage" event is fired from another tab in the browser.
+ * This function takes an optional `options` object with `defaultValue` property to start off with and optional `storageArea` property
+ * to specify which storage to use, `localStorage` is used if not specified.
+ *
+ * @example
+ * ```js
+ * const MyComponent = () => {
+ * const { item, setItem, removeItem } = useStorage("item", {
+ *   defaultValue: "something",
+ *   storageArea: window.sessionStorage,
+ * });
+ *   return (
+ *     <div>
+ *       <p>{item}</p>
+ *       <button onClick={() => setItem("something else")}>Update item</button>
+ *       <button onClick={() => removeItem()}>Delete item</button>
+ * );
+ * };
+ * ```
+ *
+ * @param key The key of the storage entry.
+ * @param options.defaultValue Optional default value to initialize state with.
+ * @param options.storageArea Optional property to specify which storage to use, `localStorage` by default.
+ * @returns An array containing the value
+ * associated with the key in position 0, a function to set the value in position 1,
+ * and a function to delete the value from the storage in position 2.
+ */
 const useWebStorage = <TValue>(
   key: string,
   options?: UseWebStorageOptions<TValue>
@@ -93,7 +123,7 @@ const useWebStorage = <TValue>(
     [key, storageArea]
   );
 
-  return [state, writeState, removeState];
+  return { state, writeState, removeState };
 };
 
 export default useWebStorage;
