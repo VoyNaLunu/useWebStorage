@@ -1,6 +1,8 @@
 {
   "name": "@voynalunu/use-web-storage",
   "description": "A React hook for using Web Storage",
+  "author": "VoyNaLunu",
+  "repository": "github:VoyNaLunu/useWebStorage",
   "license": "MIT",
   "version": "0.1.3",
   "type": "module",
