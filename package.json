@@ -1,7 +1,8 @@
 {
-  "name": "use-web-storage",
+  "name": "@voynalunu/use-web-storage",
   "description": "A React hook for using Web Storage",
-  "version": "0.1.0",
+  "license": "MIT",
+  "version": "0.1.2",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -10,7 +11,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "react": ">=16.8.0",

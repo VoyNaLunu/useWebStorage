@@ -6,7 +6,9 @@
 
 ## Installation
 
-TODO
+```
+npm i @voynalunu/use-web-storage
+```
 
 ## Usage
 
