@@ -43,7 +43,7 @@ interface UseWebStorageOptions<TValue> {
  * associated with the key in position 0, a function to set the value in position 1,
  * and a function to delete the value from the storage in position 2.
  */
-const useWebStorage = <TValue>(
+const useWebStorage = <TValue = unknown>(
   key: string,
   options?: UseWebStorageOptions<TValue>
 ) => {

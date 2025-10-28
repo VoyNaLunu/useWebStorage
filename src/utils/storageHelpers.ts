@@ -4,7 +4,9 @@ export const HOOK_EVENT_NAME = "storage-change";
  * attempts to `JSON.parse` provided value and return the result, returns unmodified value if fails
  * @param json
  */
-export const safelyParseJSON = <T>(json: string): T | string => {
+export const safelyParseJSON = <TValue = unknown>(
+  json: string
+): TValue | string => {
   try {
     return JSON.parse(json);
   } catch {
@@ -24,7 +26,7 @@ export const safelyParseJSON = <T>(json: string): T | string => {
  * console.log(value) // 'world'
  * ```
  */
-export const readStorage = <TValue>(
+export const readStorage = <TValue = unknown>(
   key: string,
   storageArea: Storage
 ): TValue | string | null => {
@@ -53,7 +55,7 @@ export interface HookEventDetail<TValue> {
  * console.log(value) // 'world'
  * ```
  */
-export const writeStorage = <TValue>(
+export const writeStorage = <TValue = unknown>(
   key: string,
   value: TValue,
   storageArea: Storage
