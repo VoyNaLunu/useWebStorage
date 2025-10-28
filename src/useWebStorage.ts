@@ -105,7 +105,7 @@ const useWebStorage = <TValue>(
     };
   }, [key, storageArea, defaultValue]);
 
-  const writeState = useCallback(
+  const setItem = useCallback(
     (value: StateType | ((prevState: StateType) => StateType)) => {
       writeStorage(
         key,
@@ -118,12 +118,12 @@ const useWebStorage = <TValue>(
     [state, key, storageArea]
   );
 
-  const removeState = useCallback(
+  const removeItem = useCallback(
     () => removeFromStorage(key, storageArea),
     [key, storageArea]
   );
 
-  return { state, writeState, removeState };
+  return { item: state, setItem, removeItem };
 };
 
 export default useWebStorage;
